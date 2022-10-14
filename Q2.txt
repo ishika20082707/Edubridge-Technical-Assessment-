@@ -1,0 +1,101 @@
+public class DLL {
+
+	class Node {
+		int info;
+		Node next;
+		Node pre;
+		Node(int  info)
+		{
+			this.info=  info;
+			pre = null;
+			next = null;
+		}
+	}
+
+	Node head = null;
+
+
+
+	public void addAtBeg(int  info)
+	{
+		Node ptr= new Node(info);
+		if (head == null) {
+			head = ptr;
+			return;
+		}
+		ptr.next = head;
+		head.pre = ptr;
+		head = ptr;
+	}
+
+
+
+	public void insertAtLast(int info)
+	{
+		if (head == null) {
+			addAtBeg(info);
+			return;
+		}
+		Node temp = head;
+		while (temp.next != null) {
+			temp = temp.next;
+		}
+		Node ptr = new Node(info);
+		temp.next = ptr;
+		ptr.pre = temp;
+	}
+
+
+
+	public void show()
+	{
+		Node temp = head;
+		while (temp != null) {
+			System.out.print(temp.info+ "->");
+			temp = temp.next;
+		}
+		
+	}
+
+
+	public void rotateN(int pos)
+	{
+		if (pos == 0) {
+			return;
+		}
+		Node curr = head;
+		while (pos != 0) {
+			curr = curr.next;
+			pos--;
+		}
+		Node tail = curr.pre;
+		Node NHead = curr;
+		tail.next = null;
+		curr.pre = null;
+		while (curr.next != null) {
+			curr = curr.next;
+		}
+		curr.next = head;
+		head.pre = curr;
+		head = NHead;
+	}
+
+	public static void main(String[] args)
+	{
+		DLL list = new DLL();
+        	int n = 4;
+		list.insertAtLast(1);
+		list.insertAtLast(2);
+		list.insertAtLast(3);
+		list.insertAtLast(4);
+		list.insertAtLast(5);
+
+	
+		System.out.println("\n Original List ");
+		list.show();
+	
+		list.rotateN(n);
+		System.out.println("\n Updated List ");
+		list.show();
+	}
+}
